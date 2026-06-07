@@ -1,12 +1,18 @@
 'use strict';
 
-
 export function displayNews(data, newsContainer) {
     newsContainer.innerHTML = '';
 
-    data.forEach(article => {
+    // Guardian nests the article array under response.results.
+    // This line works whether you pass the whole response or the array itself.
+    const articles = Array.isArray(data) ? data : (data?.response?.results ?? []);
 
-        if (!article.title || !article.description || !article.url) {
+    articles.forEach(article => {
+        const fields = article.fields ?? {};
+
+        // Only webTitle + webUrl are truly required to build a clickable card.
+        // Description/headline/thumbnail are "nice to have" and handled below.
+        if (!article.webTitle || !article.webUrl) {
             console.error('Missing required properties in article:', article);
             return;
         }
@@ -14,10 +20,13 @@ export function displayNews(data, newsContainer) {
         const newsCard = document.createElement('div');
         newsCard.classList.add('newsCard');
         newsCard.innerHTML = `
-            <h2>${article.title}</h2>
-            <h3>${article.description}</h3>
-            <p>${article.content}</p>
-            <a href="${article.url}" target="_blank">Read More</a>
+            ${fields.thumbnail ? `<img class="news-thumbnail" src="${fields.thumbnail}" alt="${article.webTitle}">` : ''}
+            <div class="news-content">
+            <h2 class="news-webTitle">${article.webTitle}</h2>
+            
+            <p class="web-desc">${fields.trailText ?? 'No description available.'}</p>
+            </div>
+            <a href="${article.webUrl}" target="_blank" rel="noopener">Read More</a>
         `;
         newsContainer.appendChild(newsCard);
     });

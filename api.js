@@ -8,7 +8,7 @@ export const weatherBaseUrl = 'https://api.openweathermap.org/data/2.5';
 
 export const units = 'imperial';
 
-export const newBaseUrl = 'https://gnews.io/api/v4/'
+export const newsBaseUrl = 'https://content.guardianapis.com/'
 
 
 export async function getWeather(cityName) {
@@ -30,14 +30,14 @@ export async function getWeather(cityName) {
 }
 
 
-export async function getNews( query ) {
+export async function getNews() {
     try {
-        const response = await fetch(`${newBaseUrl}search?q=${query}&lang=en&country=us&max=6&apikey=${newsKey}`);
+        const response = await fetch(`${newsBaseUrl}search?q=technology&show-fields=trailText,thumbnail,headline&api-key=${newsKey}`);
 
         const data = await response.json();
         console.log(data);
 
-        return data.articles;
+        return data.response.results;
 
     } catch (error) {
 
