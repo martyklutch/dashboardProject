@@ -19,9 +19,9 @@ export function displayWeather(data, weatherContainer, emptyMessage =  'There is
         weatherCard.innerHTML = `
             <img class="weather-img" src="${imageURL}" alt="${data.weather[0].description}">
                 <div class="weather-data">
-                  <h2>${data.name}</h2>
-                  <h3>${Math.round(data.main.temp)}</h3>
-                  <p>${data.weather[0].description}</p>
+                  <h2 class="weather-header">${data.name}</h2>
+                  <h3 class="weather-temp">${Math.round(data.main.temp)}<sup>°F</sup></h3>
+                  <p class="weather-desc">${data.weather[0].description}</p>
                 </div>  
         
         `;
