@@ -11,8 +11,8 @@ const weatherContainer = document.querySelector('.weatherUI');
 
 async function initDashboard() {
     try {
-        const weatherData = await getWeather('Rancho Cucamonga') ;
-        displayWeather(weatherData, weatherContainer);
+        const {cityName, forecast} = await getWeather('Rancho Cucamonga') ;
+        displayWeather(forecast, weatherContainer, cityName);
     } catch (error) {
         console.error('Error fetching weather data:', error);
     }

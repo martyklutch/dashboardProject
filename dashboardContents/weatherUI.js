@@ -4,8 +4,12 @@
 
 
 // function to display the weather
-export function displayWeather(data, weatherContainer, emptyMessage =  'There is no data available.') {
+export function displayWeather(data, weatherContainer, cityName, emptyMessage =  'There is no data available.') {
     weatherContainer.innerHTML = '';
+
+    data.forEach(data => {
+
+
 
     if(!data) {
         weatherContainer.innerHTML = `<p>${emptyMessage}</p>`;
@@ -13,13 +17,14 @@ export function displayWeather(data, weatherContainer, emptyMessage =  'There is
         return;
     }
     // imageURL
-        const imageURL = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+
+        const imageURL = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
         const weatherCard = document.createElement('div');
         weatherCard.classList.add('weatherCard');
         weatherCard.innerHTML = `
             <img class="weather-img" src="${imageURL}" alt="${data.weather[0].description}">
                 <div class="weather-data">
-                  <h2 class="weather-header">${data.name}</h2>
+                  <h2 class="weather-header">${cityName}</h2>
                   <h3 class="weather-temp">${Math.round(data.main.temp)}<sup>°F</sup></h3>
                   <p class="weather-desc">${data.weather[0].description}</p>
                 </div>  
@@ -27,4 +32,5 @@ export function displayWeather(data, weatherContainer, emptyMessage =  'There is
         `;
 
 weatherContainer.appendChild(weatherCard);
+    })
 }
